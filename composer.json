@@ -1,0 +1,39 @@
+{
+    "name": "davidvanschaik/filament-ai-dashboard",
+    "description": "A Filament plugin for an AI Monitoring Dashboard to keep track on your OpenAI API activity.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "DavidvanSchaik\\FilamentAiDashboard\\": "src",
+            "DavidvanSchaik\\FilamentAiDashboard\\Database\\Factories": "database/factories",
+            "DavidvanSchaik\\FilamentAiDashboard\\Database\\Seeders": "database/seeders",
+            "DavidvanSchaik\\FilamentAiDashboard\\Database\\Migrations": "database/migrations"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DavidvanSchaik\\FilamentAiDashboard\\Tests\\Unit\\": "tests/Unit",
+            "DavidvanSchaik\\FilamentAiDashboard\\Tests\\Integration\\": "tests/Integration"
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^12.0",
+        "filament/filament": "^3.0",
+        "spatie/laravel-package-tools": "^1.16"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DavidvanSchaik\\FilamentAiDashboard\\Providers\\FilamentAiDashboardServiceProvider"
+            ]
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:davidvanschaik/filament-ai-dashboard.git",
+        }
+    ],
+}
