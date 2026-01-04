@@ -6,9 +6,9 @@
     "autoload": {
         "psr-4": {
             "DavidvanSchaik\\FilamentAiDashboard\\": "src",
-            "DavidvanSchaik\\FilamentAiDashboard\\Database\\Factories": "database/factories",
-            "DavidvanSchaik\\FilamentAiDashboard\\Database\\Seeders": "database/seeders",
-            "DavidvanSchaik\\FilamentAiDashboard\\Database\\Migrations": "database/migrations"
+            "DavidvanSchaik\\FilamentAiDashboard\\Database\\Factories\\": "database/factories",
+            "DavidvanSchaik\\FilamentAiDashboard\\Database\\Seeders\\": "database/seeders",
+            "DavidvanSchaik\\FilamentAiDashboard\\Database\\Migrations\\": "database/migrations"
         }
     },
     "autoload-dev": {
@@ -29,11 +29,5 @@
                 "DavidvanSchaik\\FilamentAiDashboard\\Providers\\FilamentAiDashboardServiceProvider"
             ]
         }
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:davidvanschaik/filament-ai-dashboard.git",
-        }
-    ],
+    }
 }
