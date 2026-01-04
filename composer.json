@@ -29,11 +29,5 @@
                 "DavidvanSchaik\\FilamentAiDashboard\\Providers\\FilamentAiDashboardServiceProvider"
             ]
         }
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:davidvanschaik/filament-ai-dashboard.git",
-        }
-    ],
+    }
 }
