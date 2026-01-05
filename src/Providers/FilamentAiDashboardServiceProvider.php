@@ -31,6 +31,7 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
                 'create_messages_table',
                 'create_task_runs_table',
             ])
+            ->runsMigrations()
             ->hasViews()
             ->hasCommands([
                 InstallFilamentAiDashboardCommand::class,
