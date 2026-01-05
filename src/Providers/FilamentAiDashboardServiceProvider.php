@@ -5,6 +5,7 @@ namespace DavidvanSchaik\FilamentAiDashboard\Providers;
 
 use DavidvanSchaik\FilamentAiDashboard\Console\InstallFilamentAiDashboardCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\PublishEnvVariablesCommand;
+use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\AiDashboard;
 use DavidvanSchaik\FilamentAiDashboard\FilamentAiDashboardPlugin;
 use Filament\Facades\Filament;
 use Filament\Support\Facades\FilamentAsset;
@@ -47,7 +48,9 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         if (class_exists(Filament::class)) {
-            Filament::registerPlugin(FilamentAiDashboardPlugin::make());
+            Filament::registerPages([
+                AiDashboard::class
+            ]);
         }
     }
 }
