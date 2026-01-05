@@ -6,6 +6,7 @@ namespace DavidvanSchaik\FilamentAiDashboard\Providers;
 use DavidvanSchaik\FilamentAiDashboard\Console\InstallFilamentAiDashboardCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\PublishEnvVariablesCommand;
 use DavidvanSchaik\FilamentAiDashboard\FilamentAiDashboardPlugin;
+use Filament\Facades\Filament;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentView;
 use Spatie\LaravelPackageTools\Package;
@@ -45,7 +46,8 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        // The plugin will be registered manually by the user in their panel provider
-        // or we can use PanelProvider discovery
+        if (class_exists(Filament::class)) {
+            Filament::registerPlugin(FilamentAiDashboardPlugin::make());
+        }
     }
 }
