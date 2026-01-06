@@ -7,6 +7,7 @@ use DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\ModelsWidget;
 use DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\StorageWidget;
 use DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\UsageWidget;
 use Filament\Pages\Page;
+use UnitEnum;
 
 class AiDashboard extends Page
 {
@@ -14,9 +15,12 @@ class AiDashboard extends Page
     protected string $view = 'filament-ai-dashboard::filament.pages.ai-dashboard';
     protected static ?string $title = 'AI Dashboard';
     protected static ?string $slug = 'dashboard';
+    protected static string | UnitEnum | null $navigationGroup = null;
 
     protected function getHeaderWidgets(): array
     {
-        return config('filament-ai-dashboard-widgets');
+        self::$navigationGroup = config('filament-ai-dashboard.navigation_group');
+
+        return config('filament-ai-dashboard-widgets.widgets');
     }
 }
