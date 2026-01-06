@@ -48,6 +48,10 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        $this->publishes([
+            __DIR__.'/../../database/migrations' => database_path('migrations'),
+        ], 'filament-ai-dashboard-migrations');
+
         if (class_exists(Filament::class)) {
             Filament::registerPages([
                 AiDashboard::class

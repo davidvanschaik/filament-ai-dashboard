@@ -17,6 +17,12 @@ class InstallFilamentAiDashboardCommand extends Command
             '--force' => (bool) $this->option('force'),
         ]);
 
+        $this->info('Publishing migrations...');
+        $this->call('vendor:publish', [
+            '--tag' => 'filament-ai-dashboard-migrations',
+            '--force' => (bool) $this->option('force'),
+        ]);
+
         if ($this->confirm('Run migrations now? [Y/n]', true)) {
             $this->call('migrate');
         }
