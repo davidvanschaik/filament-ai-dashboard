@@ -3,6 +3,7 @@
 namespace DavidvanSchaik\FilamentAiDashboard\Providers;
 
 
+use DavidvanSchaik\FilamentAiDashboard\Console\CreateFilamentThemeFileCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\InstallFilamentAiDashboardCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\PublishEnvVariablesCommand;
 use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\AiDashboard;
@@ -10,6 +11,7 @@ use DavidvanSchaik\FilamentAiDashboard\FilamentAiDashboardPlugin;
 use Filament\Facades\Filament;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentView;
+use GuzzleHttp\Promise\Create;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -35,8 +37,9 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
             ->runsMigrations()
             ->hasViews()
             ->hasCommands([
+                CreateFilamentThemeFileCommand::class,
                 InstallFilamentAiDashboardCommand::class,
-                PublishEnvVariablesCommand::class
+                PublishEnvVariablesCommand::class,
             ]);
     }
 
