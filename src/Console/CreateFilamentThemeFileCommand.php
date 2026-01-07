@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 
 class CreateFilamentThemeFileCommand extends Command
 {
-    protected $signature = 'filament-ai-dashboard:make-theme';
+    protected $signature = 'filament-ai-dashboard:theme';
     protected $description = 'Adding source line to theme file or create a new filament theme file';
 
     public function handle(): void
