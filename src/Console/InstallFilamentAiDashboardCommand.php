@@ -30,8 +30,6 @@ class InstallFilamentAiDashboardCommand extends Command
             '--force' => (bool) $this->option('force'),
         ]);
 
-        $this->ensureFilamentThemeAndSource();
-
         if ($this->confirm('Run migrations now? [Y/n]', true)) {
             $this->call('migrate');
         }
