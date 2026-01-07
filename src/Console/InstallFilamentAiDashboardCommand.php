@@ -34,14 +34,9 @@ class InstallFilamentAiDashboardCommand extends Command
         }
 
         $this->newLine();
-        $this->info('✅ Installed Filament AI Dashboard');
+        $this->info('Installed Filament AI Dashboard');
         $this->newLine();
-        $this->warn('📝 Next steps:');
-        $this->line('   Add the plugin to your Filament panel in app/Providers/Filament/AdminPanelProvider.php:');
-        $this->newLine();
-        $this->line('   ->plugins([');
-        $this->line('       \DavidvanSchaik\FilamentAiDashboard\FilamentAiDashboardPlugin::make(),');
-        $this->line('   ])');
+        $this->warn('Next step: Add the .env variables with the command php artisan filament-ai-dashboard:install-env');
         $this->newLine();
 
         return self::SUCCESS;

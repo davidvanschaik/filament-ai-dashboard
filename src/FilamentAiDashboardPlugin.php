@@ -18,7 +18,12 @@ class FilamentAiDashboardPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        $panel->pages([AiDashboard::class]);
+        $panel->pages([
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Pages\AiDashboard::class,
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Pages\ModelsDetail::class,
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Pages\UsageDetail::class,
+            \Davidvanschaik\FilamentAiDashboard\Filament\Pages\JobsDetail::class,
+        ]);
     }
 
     public function boot(Panel $panel): void
