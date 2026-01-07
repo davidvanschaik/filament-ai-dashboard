@@ -78,5 +78,20 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
             'davidvan-schaik.filament-ai-dashboard.filament.widgets.jobs-widget',
             \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\JobsWidget::class
         );
+
+        Livewire::component(
+            'davidvan-schaik.filament-ai-dashboard.filament.widgets.charts.models-request-chart',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\ModelsRequestChart::class
+        );
+
+        Livewire::component(
+            'davidvan-schaik.filament-ai-dashboard.filament.widgets.charts.models-token-euro-chart',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\ModelsTokenEuroChart::class
+        );
+
+        Livewire::component(
+            'davidvan-schaik.filament-ai-dashboard.filament.widgets.tables.models-overview-table',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Tables\ModelOverviewTable::class
+        );
     }
 }
