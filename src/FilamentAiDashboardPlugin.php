@@ -22,7 +22,7 @@ class FilamentAiDashboardPlugin implements Plugin
             \DavidvanSchaik\FilamentAiDashboard\Filament\Pages\AiDashboard::class,
             \DavidvanSchaik\FilamentAiDashboard\Filament\Pages\ModelsDetail::class,
             \DavidvanSchaik\FilamentAiDashboard\Filament\Pages\UsageDetail::class,
-            \Davidvanschaik\FilamentAiDashboard\Filament\Pages\JobsDetail::class,
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Pages\JobsDetail::class,
         ]);
     }
 
