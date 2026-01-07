@@ -41,6 +41,6 @@ abstract class BaseStorageService
         $power = floor(log($bytes, 1024));
         $value = $bytes / pow(1024, $power);
 
-        return round($value, 2) . ' BaseStorageService.php' . $units[$power - 1];
+        return round($value, 2) . ' ' . $units[$power - 1];
     }
 }

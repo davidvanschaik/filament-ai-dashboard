@@ -10,6 +10,7 @@ use DavidvanSchaik\FilamentAiDashboard\FilamentAiDashboardPlugin;
 use Filament\Facades\Filament;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentView;
+use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -57,5 +58,25 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
                 AiDashboard::class
             ]);
         }
+
+        Livewire::component(
+            'davidvan-schaik.filament-ai-dashboard.filament.widgets.models-widget',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\ModelsWidget::class
+        );
+
+        Livewire::component(
+            'davidvan-schaik.filament-ai-dashboard.filament.widgets.usage-widget',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\UsageWidget::class
+        );
+
+        Livewire::component(
+            'davidvan-schaik.filament-ai-dashboard.filament.widgets.storage-widget',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\StorageWidget::class
+        );
+
+        Livewire::component(
+            'davidvan-schaik.filament-ai-dashboard.filament.widgets.jobs-widget',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\JobsWidget::class
+        );
     }
 }
