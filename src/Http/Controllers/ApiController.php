@@ -17,7 +17,7 @@ class ApiController extends Controller
             $start = $request->query('start_time');
             $end = $request->query('end_time');
 
-            $path = storage_path('data/models.json');
+            $path = storage_path('app/filament-ai-dashboard/data/models.json');
 
             if (! file_exists($path)) {
                 return response()->json(['error' => 'File not found'], 404);
@@ -88,7 +88,7 @@ class ApiController extends Controller
 
     public function getFiles(Request $request): JsonResponse
     {
-        $path = storage_path('data/files.json');
+        $path = storage_path('app/filament-ai-dashboard/data/files.json');
         $limit = $request->query('limit');
         $after = $request->query('after');
 
@@ -97,7 +97,7 @@ class ApiController extends Controller
 
     public function getVectorStores(Request $request): JsonResponse
     {
-        $path = storage_path('data/vector_stores.json');
+        $path = storage_path('app/filament-ai-dashboard/data/vector_stores.json');
         $limit = $request->query('limit');
         $after = $request->query('after');
 
