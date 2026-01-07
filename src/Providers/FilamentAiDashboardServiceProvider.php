@@ -59,39 +59,28 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
             ]);
         }
 
-        Livewire::component(
-            'davidvan-schaik.filament-ai-dashboard.filament.widgets.models-widget',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\ModelsWidget::class
-        );
+        $widgets = [
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\ModelsWidget::class => 'models-widget',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\UsageWidget::class => 'usage-widget',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\StorageWidget::class => 'storage-widget',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\JobsWidget::class => 'jobs-widget',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\ModelsRequestChart::class => 'charts.models-request-chart',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\ModelsTokenEuroChart::class => 'charts.models-token-euro-chart',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\ProjectTokenEuroChart::class => 'charts.project-token-euro-chart',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\JobsExecutedChart::class => 'charts.jobs-executed-chart',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\JobsDurationChart::class => 'charts.jobs-duration-chart',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\JobsTokenEuroChart::class => 'charts.jobs-token-euro-chart',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Tables\ModelOverviewTable::class => 'tables.model-overview-table',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Tables\ModelUsageTable::class => 'tables.model-usage-table',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Tables\JobsOverviewTable::class => 'tables.jobs-overview-table',
+            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Tables\ProjectUsageTable::class => 'tables.project-usage-table',
+        ];
 
-        Livewire::component(
-            'davidvan-schaik.filament-ai-dashboard.filament.widgets.usage-widget',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\UsageWidget::class
-        );
-
-        Livewire::component(
-            'davidvan-schaik.filament-ai-dashboard.filament.widgets.storage-widget',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\StorageWidget::class
-        );
-
-        Livewire::component(
-            'davidvan-schaik.filament-ai-dashboard.filament.widgets.jobs-widget',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\JobsWidget::class
-        );
-
-        Livewire::component(
-            'davidvan-schaik.filament-ai-dashboard.filament.widgets.charts.models-request-chart',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\ModelsRequestChart::class
-        );
-
-        Livewire::component(
-            'davidvan-schaik.filament-ai-dashboard.filament.widgets.charts.models-token-euro-chart',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\ModelsTokenEuroChart::class
-        );
-
-        Livewire::component(
-            'davidvan-schaik.filament-ai-dashboard.filament.widgets.tables.models-overview-table',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Tables\ModelOverviewTable::class
-        );
+        foreach ($widgets as $class => $widget) {
+            Livewire::component(
+                "davidvan-schaik.filament-ai-dashboard.filament.widgets.{$widget}",
+                $class
+            );
+        }
     }
 }
