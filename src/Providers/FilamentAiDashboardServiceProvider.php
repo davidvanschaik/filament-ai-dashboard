@@ -2,7 +2,6 @@
 
 namespace DavidvanSchaik\FilamentAiDashboard\Providers;
 
-
 use Carbon\Carbon;
 use DavidvanSchaik\FilamentAiDashboard\Console\CreateFilamentThemeFileCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\InstallFilamentAiDashboardCommand;
@@ -12,6 +11,7 @@ use Filament\Facades\Filament;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets;
 
 class FilamentAiDashboardServiceProvider extends PackageServiceProvider
 {
@@ -23,7 +23,7 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
                 'filament-ai-dashboard-api',
                 'filament-ai-dashboard-pricing',
                 'filament-ai-dashboard-providers',
-                'filament-ai-dashboard-widgets',
+                'filament-ai-dashboard',
             ])
             ->hasMigrations([
                 'create_tasks_table',
@@ -39,8 +39,16 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
             ]);
     }
 
+    public function boot(): void
+    {
+        parent::boot();
+    }
+
     public function packageRegistered(): void
     {
+        $this->mergeConfigFrom(__DIR__ . '/../../config/filament-ai-dashboard.php', 'filament-ai-dashboard');
+        AiMonitoringDashboard::$navigationGroup = config('filament-ai-dashboard.navigation_group');
+
         foreach (config('filament-ai-dashboard-providers', []) as $class) {
             $this->app->singleton($class);
         }
@@ -59,20 +67,20 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
         }
 
         $widgets = [
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\ModelsWidget::class => 'models-widget',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\UsageWidget::class => 'usage-widget',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\StorageWidget::class => 'storage-widget',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\JobsWidget::class => 'jobs-widget',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\ModelsRequestChart::class => 'charts.models-request-chart',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\ModelsTokenEuroChart::class => 'charts.models-token-euro-chart',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\ProjectTokenEuroChart::class => 'charts.project-token-euro-chart',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\JobsExecutedChart::class => 'charts.jobs-executed-chart',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\JobsDurationChart::class => 'charts.jobs-duration-chart',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Charts\JobsTokenEuroChart::class => 'charts.jobs-token-euro-chart',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Tables\ModelOverviewTable::class => 'tables.model-overview-table',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Tables\ModelUsageTable::class => 'tables.model-usage-table',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Tables\JobsOverviewTable::class => 'tables.jobs-overview-table',
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Tables\ProjectUsageTable::class => 'tables.project-usage-table',
+            Widgets\ModelsWidget::class => 'models-widget',
+            Widgets\UsageWidget::class => 'usage-widget',
+            Widgets\StorageWidget::class => 'storage-widget',
+            Widgets\JobsWidget::class => 'jobs-widget',
+            Widgets\Charts\ModelsRequestChart::class => 'charts.models-request-chart',
+            Widgets\Charts\ModelsTokenEuroChart::class => 'charts.models-token-euro-chart',
+            Widgets\Charts\ProjectTokenEuroChart::class => 'charts.project-token-euro-chart',
+            Widgets\Charts\JobsExecutedChart::class => 'charts.jobs-executed-chart',
+            Widgets\Charts\JobsDurationChart::class => 'charts.jobs-duration-chart',
+            Widgets\Charts\JobsTokenEuroChart::class => 'charts.jobs-token-euro-chart',
+            Widgets\Tables\ModelOverviewTable::class => 'tables.model-overview-table',
+            Widgets\Tables\ModelUsageTable::class => 'tables.model-usage-table',
+            Widgets\Tables\JobsOverviewTable::class => 'tables.jobs-overview-table',
+            Widgets\Tables\ProjectUsageTable::class => 'tables.project-usage-table',
         ];
 
         foreach ($widgets as $class => $widget) {
