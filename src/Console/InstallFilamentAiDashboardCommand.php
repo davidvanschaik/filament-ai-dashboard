@@ -3,7 +3,7 @@
 namespace DavidvanSchaik\FilamentAiDashboard\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Artisan;
 
 class InstallFilamentAiDashboardCommand extends Command
 {
@@ -15,8 +15,9 @@ class InstallFilamentAiDashboardCommand extends Command
         $this->info('Publishing configure files...');
         $this->call('vendor:publish', [
             '--tag' => 'filament-ai-dashboard-config',
-            '--force' => (bool)$this->option('force'),
+            '--force' => true,
         ]);
+        Artisan::call('config:clear');
 
         $this->info('Publishing migrations...');
         $this->call('vendor:publish', [

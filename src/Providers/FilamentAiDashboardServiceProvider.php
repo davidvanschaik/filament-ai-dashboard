@@ -7,6 +7,7 @@ use DavidvanSchaik\FilamentAiDashboard\Console\CreateFilamentThemeFileCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\InstallFilamentAiDashboardCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\PublishEnvVariablesCommand;
 use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\AiMonitoringDashboard;
+use DavidvanSchaik\FilamentAiDashboard\Filament\Pages;
 use Filament\Facades\Filament;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
@@ -63,7 +64,10 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
 
         if (class_exists(Filament::class)) {
             Filament::registerPages([
-                AiMonitoringDashboard::class
+                AiMonitoringDashboard::class,
+                Pages\JobsDetail::class,
+                Pages\ModelsDetail::class,
+                Pages\UsageDetail::class,
             ]);
         }
 
