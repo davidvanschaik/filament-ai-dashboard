@@ -19,6 +19,11 @@ class AiMonitoringDashboard extends Page
 
     protected function getHeaderWidgets(): array
     {
-        return config('filament-ai-dashboard.widgets', []);
+        return config('filament-ai-dashboard.widgets', [
+            ModelsWidget::class,
+            UsageWidget::class,
+            StorageWidget::class,
+            JobsWidget::class,
+        ]);
     }
 }

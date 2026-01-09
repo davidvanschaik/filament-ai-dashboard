@@ -47,7 +47,6 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/filament-ai-dashboard.php', 'filament-ai-dashboard');
-        AiMonitoringDashboard::$navigationGroup = config('filament-ai-dashboard.navigation_group');
 
         foreach (config('filament-ai-dashboard-providers', []) as $class) {
             $this->app->singleton($class);
@@ -59,6 +58,8 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
         $this->publishes([
             __DIR__ . '/../../data' => storage_path('app/filament-ai-dashboard/data'),
         ], 'filament-ai-dashboard-data');
+
+        AiMonitoringDashboard::$navigationGroup = config('filament-ai-dashboard.navigation_group');
 
         if (class_exists(Filament::class)) {
             Filament::registerPages([
