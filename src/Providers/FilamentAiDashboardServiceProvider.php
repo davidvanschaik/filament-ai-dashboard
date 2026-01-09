@@ -48,8 +48,6 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        $this->publishMigrations();
-
         $this->publishes([
             __DIR__ . '/../../data' => storage_path('app/filament-ai-dashboard/data'),
         ], 'filament-ai-dashboard-data');
@@ -82,26 +80,6 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
                 "davidvan-schaik.filament-ai-dashboard.filament.widgets.{$widget}",
                 $class
             );
-        }
-    }
-
-    private function publishMigrations(): void
-    {
-        $migrations = __DIR__ . '/../../database/migrations';
-        $stubs = glob($migrations . '/*.php.stub');
-
-        $now = Carbon::now();
-
-        foreach ($stubs as $index => $stub) {
-            $migrationName = basename($stub, '.php.stub');
-            $timestamp = $now->copy()->addSecond($index)->format('Y_m_d_His');
-            $target = database_path("migrations/{$timestamp}_{$migrationName}.php");
-
-            if (! file_exists($target)) {
-                $this->publishes([
-                    $stub => $target,
-                ], 'filament-ai-dashboard-migrations');
-            }
         }
     }
 }
