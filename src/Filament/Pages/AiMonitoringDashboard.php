@@ -9,12 +9,12 @@ use DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\UsageWidget;
 use Filament\Pages\Page;
 use UnitEnum;
 
-class AiDashboard extends Page
+class AiMonitoringDashboard extends Page
 {
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar-square';
     protected string $view = 'filament-ai-dashboard::filament.pages.ai-dashboard';
-    protected static ?string $title = 'AI Dashboard';
-    protected static ?string $slug = 'dashboard';
+    protected static ?string $title = 'AI Monitoring';
+    protected static ?string $slug = 'monitoring';
     protected static string | UnitEnum | null $navigationGroup = null;
 
     protected function getHeaderWidgets(): array

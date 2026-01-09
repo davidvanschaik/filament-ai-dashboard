@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use DavidvanSchaik\FilamentAiDashboard\Console\CreateFilamentThemeFileCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\InstallFilamentAiDashboardCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\PublishEnvVariablesCommand;
-use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\AiDashboard;
+use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\AiMonitoringDashboard;
 use Filament\Facades\Filament;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
@@ -54,7 +54,7 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
 
         if (class_exists(Filament::class)) {
             Filament::registerPages([
-                AiDashboard::class
+                AiMonitoringDashboard::class
             ]);
         }
 
