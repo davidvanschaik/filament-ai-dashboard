@@ -3,15 +3,12 @@
 namespace DavidvanSchaik\FilamentAiDashboard\Providers;
 
 
+use Carbon\Carbon;
 use DavidvanSchaik\FilamentAiDashboard\Console\CreateFilamentThemeFileCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\InstallFilamentAiDashboardCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\PublishEnvVariablesCommand;
 use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\AiDashboard;
-use DavidvanSchaik\FilamentAiDashboard\FilamentAiDashboardPlugin;
 use Filament\Facades\Filament;
-use Filament\Support\Facades\FilamentAsset;
-use Filament\Support\Facades\FilamentView;
-use GuzzleHttp\Promise\Create;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -52,9 +49,7 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        $this->publishes([
-            __DIR__.'/../../database/migrations' => database_path('migrations'),
-        ], 'filament-ai-dashboard-migrations');
+        $this->publishMigrations();
 
         $this->publishes([
             __DIR__ . '/../../data' => storage_path('app/filament-ai-dashboard/data'),
@@ -88,6 +83,26 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
                 "davidvan-schaik.filament-ai-dashboard.filament.widgets.{$widget}",
                 $class
             );
+        }
+    }
+
+    private function publishMigrations(): void
+    {
+        $migrations = __DIR__ . '/../../database/migrations';
+        $stubs = glob($migrations . '/*.php.stub');
+
+        $now = Carbon::now();
+
+        foreach ($stubs as $index => $stub) {
+            $migrationName = basename($stub, '.php.stub');
+            $timestamp = $now->copy()->addSecond($index)->format('Y_m_d_His');
+            $target = database_path("migrations/{$timestamp}_{$migrationName}.php");
+
+            if (! file_exists($target)) {
+                $this->publishes([
+                    $stub => $target,
+                ], 'filament-ai-dashboard-migrations');
+            }
         }
     }
 }

@@ -54,7 +54,6 @@ class CreateFilamentThemeFileCommand extends Command
     private function findThemeFiles(): array
     {
         $themeFile = 'resources/css/filament/**/theme.css';
-        $source =  '@source "../../../../vendor/davidvanschaik/filament-ai-dashboard/resources/views/**/*.blade.php";';
 
         $paths = glob(base_path($themeFile));
         $single = base_path('resources/css/filament/theme.css');
