@@ -40,17 +40,7 @@ class InstallFilamentAiDashboardCommand extends Command
             ]);
         }
 
-        $this->newLine();
         $this->info('Installed Filament AI Dashboard');
-        $this->newLine();
-        $this->warn('Next steps:');
-        $this->newLine();
-        $this->info('- Add the .env variables with the command php artisan filament-ai-dashboard:install-env');
-        $this->newLine();
-        $this->info('- Add to app/Providers/Filament/...ServiceProvider ->plugins(AiDashboardPlugin::make()');
-        $this->newLine();
-        $this->info('- Add @source line to your filament theme.css by running the command filament-ai-dashboard:make-theme');
-
         return self::SUCCESS;
     }
 }

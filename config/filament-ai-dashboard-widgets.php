@@ -10,5 +10,5 @@ return [
         DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\StorageWidget::class,
         DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\JobsWidget::class,
     ],
-    'navigation_group' => 'Dashboard'
+    'navigation_group' => 'System management',
 ];
