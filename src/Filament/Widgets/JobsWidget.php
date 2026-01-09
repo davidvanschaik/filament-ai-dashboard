@@ -2,7 +2,7 @@
 
 namespace DavidvanSchaik\FilamentAiDashboard\Filament\Widgets;
 
-use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\JobsDetail;
+use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\Detail\JobsDetail;
 use DavidvanSchaik\FilamentAiDashboard\Services\JobService;
 use Filament\Widgets\Widget;
 

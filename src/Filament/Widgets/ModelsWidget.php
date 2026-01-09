@@ -3,7 +3,7 @@
 namespace DavidvanSchaik\FilamentAiDashboard\Filament\Widgets;
 
 use DavidvanSchaik\FilamentAiDashboard\Filament\Components\FilterComponents;
-use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\ModelsDetail;
+use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\Detail\ModelsDetail;
 use DavidvanSchaik\FilamentAiDashboard\Services\AiModelService;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;

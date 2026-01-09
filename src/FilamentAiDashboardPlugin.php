@@ -16,9 +16,9 @@ class FilamentAiDashboardPlugin implements Plugin
     {
         $panel->pages([
             \DavidvanSchaik\FilamentAiDashboard\Filament\Pages\AiMonitoringDashboard::class,
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Pages\ModelsDetail::class,
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Pages\UsageDetail::class,
-            \DavidvanSchaik\FilamentAiDashboard\Filament\Pages\JobsDetail::class,
+            Filament\Pages\Detail\ModelsDetail::class,
+            Filament\Pages\Detail\UsageDetail::class,
+            Filament\Pages\Detail\JobsDetail::class,
         ]);
     }
 

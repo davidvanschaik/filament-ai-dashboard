@@ -2,17 +2,15 @@
 
 namespace DavidvanSchaik\FilamentAiDashboard\Providers;
 
-use Carbon\Carbon;
 use DavidvanSchaik\FilamentAiDashboard\Console\CreateFilamentThemeFileCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\InstallFilamentAiDashboardCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\PublishEnvVariablesCommand;
-use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\AiMonitoringDashboard;
 use DavidvanSchaik\FilamentAiDashboard\Filament\Pages;
-use Filament\Facades\Filament;
+use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\AiMonitoringDashboard;
+use DavidvanSchaik\FilamentAiDashboard\Filament;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets;
 
 class FilamentAiDashboardServiceProvider extends PackageServiceProvider
 {
@@ -62,35 +60,38 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
 
         AiMonitoringDashboard::$navigationGroup = config('filament-ai-dashboard.navigation_group');
 
-        if (class_exists(Filament::class)) {
-            Filament::registerPages([
+        if (class_exists(\Filament\Facades\Filament::class)) {
+            \Filament\Facades\Filament::registerPages([
                 AiMonitoringDashboard::class,
-                Pages\JobsDetail::class,
-                Pages\ModelsDetail::class,
-                Pages\UsageDetail::class,
+                Pages\Detail\JobsDetail::class,
+                Pages\Detail\ModelsDetail::class,
+                Pages\Detail\UsageDetail::class,
             ]);
         }
 
         $widgets = [
-            Widgets\ModelsWidget::class => 'models-widget',
-            Widgets\UsageWidget::class => 'usage-widget',
-            Widgets\StorageWidget::class => 'storage-widget',
-            Widgets\JobsWidget::class => 'jobs-widget',
-            Widgets\Charts\ModelsRequestChart::class => 'charts.models-request-chart',
-            Widgets\Charts\ModelsTokenEuroChart::class => 'charts.models-token-euro-chart',
-            Widgets\Charts\ProjectTokenEuroChart::class => 'charts.project-token-euro-chart',
-            Widgets\Charts\JobsExecutedChart::class => 'charts.jobs-executed-chart',
-            Widgets\Charts\JobsDurationChart::class => 'charts.jobs-duration-chart',
-            Widgets\Charts\JobsTokenEuroChart::class => 'charts.jobs-token-euro-chart',
-            Widgets\Tables\ModelOverviewTable::class => 'tables.model-overview-table',
-            Widgets\Tables\ModelUsageTable::class => 'tables.model-usage-table',
-            Widgets\Tables\JobsOverviewTable::class => 'tables.jobs-overview-table',
-            Widgets\Tables\ProjectUsageTable::class => 'tables.project-usage-table',
+            Filament\Pages\Detail\ModelsDetail::class => 'pages.detail.models-detail',
+            Filament\Pages\Detail\UsageDetail::class => 'pages.detail.usage-detail',
+            Filament\Pages\Detail\JobsDetail::class => 'pages.detail.jobs-detail',
+            Filament\Widgets\ModelsWidget::class => 'widgets.models-widget',
+            Filament\Widgets\UsageWidget::class => 'widgets.usage-widget',
+            Filament\Widgets\StorageWidget::class => 'widgets.storage-widget',
+            Filament\Widgets\JobsWidget::class => 'widgets.jobs-widget',
+            Filament\Widgets\Charts\ModelsRequestChart::class => 'widgets.charts.models-request-chart',
+            Filament\Widgets\Charts\ModelsTokenEuroChart::class => 'widgets.charts.models-token-euro-chart',
+            Filament\Widgets\Charts\ProjectTokenEuroChart::class => 'widgets.charts.project-token-euro-chart',
+            Filament\Widgets\Charts\JobsExecutedChart::class => 'widgets.charts.jobs-executed-chart',
+            Filament\Widgets\Charts\JobsDurationChart::class => 'widgets.charts.jobs-duration-chart',
+            Filament\Widgets\Charts\JobsTokenEuroChart::class => 'widgets.charts.jobs-token-euro-chart',
+            Filament\Widgets\Tables\ModelOverviewTable::class => 'widgets.tables.model-overview-table',
+            Filament\Widgets\Tables\ModelUsageTable::class => 'widgets.tables.model-usage-table',
+            Filament\Widgets\Tables\JobsOverviewTable::class => 'widgets.tables.jobs-overview-table',
+            Filament\Widgets\Tables\ProjectUsageTable::class => 'widgets.tables.project-usage-table',
         ];
 
         foreach ($widgets as $class => $widget) {
             Livewire::component(
-                "davidvan-schaik.filament-ai-dashboard.filament.widgets.{$widget}",
+                "davidvan-schaik.filament-ai-dashboard.filament.{$widget}",
                 $class
             );
         }
