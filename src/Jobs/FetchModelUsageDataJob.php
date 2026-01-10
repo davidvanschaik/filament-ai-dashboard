@@ -45,11 +45,13 @@ class FetchModelUsageDataJob implements ShouldQueue
     private function getModelDataFromAllOtherMonths(TimeRangeService $service, OpenAiClient $client): void
     {
         $modelsTotal = [];
-        $month = Carbon::now('UTC')->copy()->subMonthNoOverflow()->startOfMonth();
+        $month  = Carbon::now('UTC')->copy()->subMonthNoOverflow()->startOfMonth();
 
         while (true) {
             [$start, $end] = $service->getMonthTimeStamps($month);
             $models = $this->fetchAndFilter($client, $start, $end);
+
+            $modelsTotal[] = $models;
 
             if (count($models) === 0) {
                 break;
