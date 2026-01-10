@@ -51,13 +51,10 @@ class FetchModelUsageDataJob implements ShouldQueue
             [$start, $end] = $service->getMonthTimeStamps($month);
             $models = $this->fetchAndFilter($client, $start, $end);
 
-            $modelsTotal[] = $models;
-
             if (count($models) === 0) {
                 break;
             }
 
-            // Merge models into the total aggregate
             foreach ($models as $modelKey => $data) {
                 $modelsTotal[$modelKey] = $modelsTotal[$modelKey] ?? [
                     'requests' => 0,

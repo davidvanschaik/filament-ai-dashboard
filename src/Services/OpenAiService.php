@@ -74,12 +74,10 @@ abstract class OpenAiService
 
         $cached = Cache::get($cacheKey);
 
-        // Check if we need to refresh (older than 10 minutes)
-        if (isset($cached['time']) && (now()->timestamp - $cached['time'] > 600)) {
+        if (isset($cached['time']) && (now()->timestamp - $cached['time'] > 900)) {
             FetchModelUsageDataJob::dispatch();
         }
 
-        // Extract models from cache structure
         $models = $cached['models'] ?? [];
 
         return $this->getTotalWidgetData([], $models);
@@ -92,23 +90,28 @@ abstract class OpenAiService
 
         if (! Cache::has($cacheKeyTotal) || ! Cache::has($cacheKeyThisMonth)) {
             FetchModelUsageDataJob::dispatch();
-            return [];
+            return ['Error' => 'Fetching data...'];
         }
 
-        // Get both caches
-        $totalModels = Cache::get($cacheKeyTotal, []);
+        if (isset($cached['time']) && (now()->timestamp - $cacheKeyThisMonth['time'] > 900)) {
+            FetchModelUsageDataJob::dispatch();
+        }
+
+        $totalModels = Cache::get($cacheKeyTotal);
         $thisMonthCached = Cache::get($cacheKeyThisMonth, []);
         $thisMonthModels = $thisMonthCached['models'] ?? [];
 
-        // Merge total (all previous months) with this month
         $merged = $totalModels;
+
         foreach ($thisMonthModels as $modelKey => $data) {
-            $merged[$modelKey] = $merged[$modelKey] ?? [
-                'requests' => 0,
-                'input_tokens' => 0,
-                'cached_tokens' => 0,
-                'output_tokens' => 0,
-            ];
+            if (!isset($merged[$modelKey])) {
+                $merged[$modelKey] = [
+                    'requests' => 0,
+                    'input_tokens' => 0,
+                    'cached_tokens' => 0,
+                    'output_tokens' => 0,
+                ];
+            }
 
             $merged[$modelKey]['requests'] += $data['requests'] ?? 0;
             $merged[$modelKey]['input_tokens'] += $data['input_tokens'] ?? 0;

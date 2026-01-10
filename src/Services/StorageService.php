@@ -20,7 +20,7 @@ class StorageService
         }
 
         if (! $vector || ! $files) {
-            return ['Error' => 'No data found.'];
+            return ['Error' => 'Fetching data...'];
         }
 
         return [
