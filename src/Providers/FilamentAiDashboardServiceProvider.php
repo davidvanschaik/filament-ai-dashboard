@@ -6,8 +6,8 @@ use DavidvanSchaik\FilamentAiDashboard\Console\CreateFilamentThemeFileCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\InstallFilamentAiDashboardCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\PublishEnvVariablesCommand;
 use DavidvanSchaik\FilamentAiDashboard\Filament\Pages;
-use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\AiMonitoringDashboard;
 use DavidvanSchaik\FilamentAiDashboard\Filament;
+use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -41,6 +41,10 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+        Route::prefix('api')
+            ->middleware(['api'])
+            ->group(__DIR__ . '/../../routes/api.php');
     }
 
     public function packageRegistered(): void
@@ -58,11 +62,11 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
             __DIR__ . '/../../data' => storage_path('app/filament-ai-dashboard/data'),
         ], 'filament-ai-dashboard-data');
 
-        AiMonitoringDashboard::$navigationGroup = config('filament-ai-dashboard.navigation_group');
+        Pages\AiMonitoringDashboard::$navigationGroup = config('filament-ai-dashboard.navigation_group');
 
         if (class_exists(\Filament\Facades\Filament::class)) {
             \Filament\Facades\Filament::registerPages([
-                AiMonitoringDashboard::class,
+                Pages\AiMonitoringDashboard::class,
                 Pages\Detail\JobsDetail::class,
                 Pages\Detail\ModelsDetail::class,
                 Pages\Detail\UsageDetail::class,
@@ -91,7 +95,7 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
 
         foreach ($widgets as $class => $widget) {
             Livewire::component(
-                "davidvan-schaik.filament-ai-dashboard.filament.{$widget}",
+                "davidvan-schaik.filament-ai-dashboard.filament.$widget",
                 $class
             );
         }
