@@ -4,6 +4,7 @@ namespace DavidvanSchaik\FilamentAiDashboard\Services;
 
 use Carbon\Carbon;
 use DavidvanSchaik\FilamentAiDashboard\Clients\OpenAIClient;
+use DavidvanSchaik\FilamentAiDashboard\Jobs\FetchModelUsageDataJob;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Cache;
@@ -64,93 +65,37 @@ abstract class OpenAiService
 
     private function getDataFromThisMonth(OpenAiClient $client, TimeRangeService $service): array
     {
-        [$start, $end] = $service->getThisMonthTimestamps();
-        $models = $this->fetchAndFilter($client, $start, $end);
+        $cacheKey = 'ai_model_usage_this_month';
 
-        $total = [];
-
-        return $this->getTotalWidgetData($total, $models);
-    }
-
-    private function fetchAndFilter(OpenAiClient $client, int $start, int $end): array
-    {
-        $models = [];
-        $response = $client->getUsage($start, $end);
-
-        foreach ($response['data'] as $buckets) {
-            $this->filterBuckets($buckets, $models);
+        if (! Cache::has($cacheKey)) {
+            FetchModelUsageDataJob::dispatch();
+            return ['Error' => 'No data found.'];
         }
 
-        return $models;
+        $models = Cache::get($cacheKey);
+
+        if (now()->timestamp - $models['time'] > 600) {
+            FetchModelUsageDataJob::dispatch();
+        }
+
+        return $this->getTotalWidgetData([], $models);
     }
 
     private function getDataFromAllTime(OpenAiClient $client, TimeRangeService $service): array
     {
-        $now = Carbon::now('UTC');
-        $monthTime = $now->copy()->startOfMonth();
+        $cacheKeyTotal = 'ai_model_usage_total';
+        $cacheKey = 'ai_model_usage_this_month';
+        $models = [];
 
-        $thisMonth = true;
-        $total = [];
-
-        while (true) {
-            [$start, $end] = $thisMonth
-                ? $service->getThisMonthTimestamps()
-                : $service->getMonthTimeStamps($monthTime);
-
-            $models = $this->cacheModels($thisMonth, $monthTime, $client, $start, $end);
-
-            if (count($models) === 0) {
-                break;
-            }
-
-            $total = $this->getTotalWidgetData($total, $models);
-
-            $thisMonth = false;
-            $monthTime->subMonthNoOverflow()->startOfMonth();
+        if (! Cache::has($cacheKey) || ! Cache::has($cacheKeyTotal)) {
+            FetchModelUsageDataJob::dispatch();
+            return ['Error' => 'No data found.'];
         }
 
-        return $total;
-    }
+        $models[] = Cache::get($cacheKey);
+        $models[] = Cache::get($cacheKeyTotal);
 
-    private function filterBuckets(array $buckets, array &$models): void
-    {
-        if (! isset($buckets['results']) || ! is_array($buckets['results'])) {
-            Log::warning('AiModelService: No buckets found');
-            return;
-        }
-
-        foreach ($buckets['results'] as $result) {
-            $model = $result['model'];
-
-            $models[$model] = $models[$model] ?? [
-                'requests' => 0,
-                'input_tokens' => 0,
-                'cached_tokens' => 0,
-                'output_tokens' => 0,
-            ];
-
-            $models[$model]['requests'] += $result['num_model_requests'];
-            $models[$model]['input_tokens'] += $result['input_tokens'] - $result['input_cached_tokens'];
-            $models[$model]['cached_tokens'] += $result['input_cached_tokens'];
-            $models[$model]['output_tokens'] += $result['output_tokens'];
-        }
-    }
-
-    private function cacheModels(bool $thisMonth, Carbon $time, OpenAiClient $client, int $start, int $end): array
-    {
-        $cacheKey = 'ai_model_' . $time->format('Y-m');
-
-        if (! $thisMonth && Cache::has($cacheKey)) {
-            return Cache::get($cacheKey);
-        }
-
-        $models = $this->fetchAndFilter($client, $start, $end);
-
-        if (! $thisMonth && ! empty($models)) {
-            Cache::forever($cacheKey, $models);
-        }
-
-        return $models;
+        return $this->getTotalWidgetData([], $models);
     }
 
     abstract protected function getTotalWidgetData(array $total, array $models): array;
