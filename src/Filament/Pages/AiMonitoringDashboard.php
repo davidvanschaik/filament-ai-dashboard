@@ -2,10 +2,10 @@
 
 namespace DavidvanSchaik\FilamentAiDashboard\Filament\Pages;
 
-use DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\JobsWidget;
-use DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\ModelsWidget;
-use DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\StorageWidget;
-use DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\UsageWidget;
+use DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Dashboard\JobsWidget;
+use DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Dashboard\ModelsWidget;
+use DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Dashboard\StorageWidget;
+use DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Dashboard\UsageWidget;
 use Filament\Pages\Page;
 use UnitEnum;
 
