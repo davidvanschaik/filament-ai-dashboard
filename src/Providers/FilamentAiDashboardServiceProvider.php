@@ -5,8 +5,8 @@ namespace DavidvanSchaik\FilamentAiDashboard\Providers;
 use DavidvanSchaik\FilamentAiDashboard\Console\CreateFilamentThemeFileCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\InstallFilamentAiDashboardCommand;
 use DavidvanSchaik\FilamentAiDashboard\Console\PublishEnvVariablesCommand;
-use DavidvanSchaik\FilamentAiDashboard\Filament;
 use DavidvanSchaik\FilamentAiDashboard\Filament\Pages;
+use DavidvanSchaik\FilamentAiDashboard\Filament;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
@@ -77,10 +77,10 @@ class FilamentAiDashboardServiceProvider extends PackageServiceProvider
             Filament\Pages\Detail\ModelsDetail::class => 'pages.detail.models-detail',
             Filament\Pages\Detail\UsageDetail::class => 'pages.detail.usage-detail',
             Filament\Pages\Detail\JobsDetail::class => 'pages.detail.jobs-detail',
-            Filament\Widgets\Dashboard\ModelsWidget::class => 'widgets.dashboard.models-widget',
-            Filament\Widgets\Dashboard\UsageWidget::class => 'widgets.dashboard.usage-widget',
-            Filament\Widgets\Dashboard\StorageWidget::class => 'widgets.dashboard.storage-widget',
-            Filament\Widgets\Dashboard\JobsWidget::class => 'widgets.dashboard.jobs-widget',
+            Filament\Widgets\ModelsWidget::class => 'widgets.models-widget',
+            Filament\Widgets\UsageWidget::class => 'widgets.usage-widget',
+            Filament\Widgets\StorageWidget::class => 'widgets.storage-widget',
+            Filament\Widgets\JobsWidget::class => 'widgets.jobs-widget',
             Filament\Widgets\Charts\ModelsRequestChart::class => 'widgets.charts.models-request-chart',
             Filament\Widgets\Charts\ModelsTokenEuroChart::class => 'widgets.charts.models-token-euro-chart',
             Filament\Widgets\Charts\ProjectTokenEuroChart::class => 'widgets.charts.project-token-euro-chart',

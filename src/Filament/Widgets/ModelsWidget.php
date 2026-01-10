@@ -1,6 +1,6 @@
 <?php
 
-namespace DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Dashboard;
+namespace DavidvanSchaik\FilamentAiDashboard\Filament\Widgets;
 
 use DavidvanSchaik\FilamentAiDashboard\Filament\Components\FilterComponents;
 use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\Detail\ModelsDetail;
@@ -8,25 +8,25 @@ use DavidvanSchaik\FilamentAiDashboard\Services\AiModelService;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Schemas\Schema;
+use Filament\Widgets\Widget;
 
-class ModelsWidget extends BaseDashboardWidget implements HasForms
+class ModelsWidget extends Widget implements HasForms
 {
     use InteractsWithForms;
 
-    protected string $view = 'filament-ai-dashboard::filament.widgets.dashboard.models-widget';
+    protected string $view = 'filament-ai-dashboard::filament.widgets.models-widget';
+
     protected ?string $heading = "Top 3 Models";
+
+    public array $models = [];
+
+    public ?string $errorMessage = null;
+
     public ?array $modelFilters = ['modelRange' => 'all'];
 
-    public function loadWidgetData(): void
+    public function mount(): void
     {
-        $service = app(AiModelService::class);
-        $result = $service->getMostUsedModels(3, $this->modelFilters['modelRange']);
-
-        if (isset($result['Error'])) {
-            $this->errorMessage = $result['Error'];
-        } else {
-            $this->widgetData = $result;
-        }
+        $this->loadModels();
     }
 
     public function form(Schema $schema): Schema
@@ -35,7 +35,19 @@ class ModelsWidget extends BaseDashboardWidget implements HasForms
             ->components([
                 FilterComponents::rangeToggle($this, 'loadModels', 'modelRange')
             ])
-            ->statePath('modelFilters');
+        ->statePath('modelFilters');
+    }
+
+    public function loadModels(): void
+    {
+        $service = app(AiModelService::class);
+        $result = $service->getMostUsedModels(3, $this->modelFilters['modelRange']);
+
+        if (isset($result['Error'])) {
+            $this->errorMessage = $result['Error'];
+        } else {
+            $this->models = $result;
+        }
     }
 
     public function openDetails(): void

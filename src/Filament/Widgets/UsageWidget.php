@@ -1,6 +1,6 @@
 <?php
 
-namespace DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Dashboard;
+namespace DavidvanSchaik\FilamentAiDashboard\Filament\Widgets;
 
 use DavidvanSchaik\FilamentAiDashboard\Filament\Components\FilterComponents;
 use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\Detail\UsageDetail;
@@ -8,14 +8,26 @@ use DavidvanSchaik\FilamentAiDashboard\Services\UsageService;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Schemas\Schema;
+use Filament\Widgets\Widget;
 
-class UsageWidget extends BaseDashboardWidget implements HasForms
+class UsageWidget extends Widget implements HasForms
 {
     use InteractsWithForms;
 
-    protected string $view = 'filament-ai-dashboard::filament.widgets.dashboard.usage-widget';
+    protected string $view = 'filament-ai-dashboard::filament.widgets.usage-widget';
+
     protected ?string $heading = "Used tokens";
+
+    public array $usage = [];
+
+    public ?string $errorMessage = null;
+
     public ?array $usageFilters = ['usageRange' => 'all'];
+
+    public function mount(): void
+    {
+        $this->loadTokens();
+    }
 
     public function form(Schema $schema): Schema
     {
@@ -26,7 +38,7 @@ class UsageWidget extends BaseDashboardWidget implements HasForms
             ->statePath('usageFilters');
     }
 
-    public function loadWidgetData(): void
+    public function loadTokens(): void
     {
         $service = app(UsageService::class);
         $result = $service->getTokens($this->usageFilters['usageRange']);
@@ -34,7 +46,7 @@ class UsageWidget extends BaseDashboardWidget implements HasForms
         if (isset($result['Error'])) {
             $this->errorMessage = $result['Error'];
         } else {
-            $this->widgetData = $result;
+            $this->usage = $result;
         }
     }
 

@@ -5,10 +5,10 @@
  */
 return [
     'widgets' => [
-        \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Dashboard\ModelsWidget::class,
-        \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Dashboard\UsageWidget::class,
-        \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Dashboard\StorageWidget::class,
-        \DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Dashboard\JobsWidget::class,
+        DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\ModelsWidget::class,
+        DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\UsageWidget::class,
+        DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\StorageWidget::class,
+        DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\JobsWidget::class,
     ],
     'navigation_group' => 'System management',
 ];

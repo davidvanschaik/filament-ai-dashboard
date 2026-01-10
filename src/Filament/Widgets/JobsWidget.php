@@ -1,16 +1,27 @@
 <?php
 
-namespace DavidvanSchaik\FilamentAiDashboard\Filament\Widgets\Dashboard;
+namespace DavidvanSchaik\FilamentAiDashboard\Filament\Widgets;
 
 use DavidvanSchaik\FilamentAiDashboard\Filament\Pages\Detail\JobsDetail;
 use DavidvanSchaik\FilamentAiDashboard\Services\JobService;
+use Filament\Widgets\Widget;
 
-class JobsWidget extends BaseDashboardWidget
+class JobsWidget extends Widget
 {
-    protected string $view = 'filament-ai-dashboard::filament.widgets.dashboard.jobs-widget';
+    protected string $view = 'filament-ai-dashboard::filament.widgets.jobs-widget';
+
     protected ?string $heading = "Executed Jobs";
 
-    protected function loadWidgetData(): void
+    public array $jobs = [];
+
+    public ?string $errorMessage = null;
+
+    public function mount(): void
+    {
+        $this->loadJobs();
+    }
+
+    public function loadJobs(): void
     {
         $service = app(JobService::class);
         $result = $service->getExecutedJobs(3);
@@ -18,7 +29,7 @@ class JobsWidget extends BaseDashboardWidget
         if (isset($result['Error'])) {
             $this->errorMessage = $result['Error'];
         } else {
-            $this->widgetData = $result;
+            $this->jobs = $result;
         }
     }
 
