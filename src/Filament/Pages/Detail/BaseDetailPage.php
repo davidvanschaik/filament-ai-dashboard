@@ -2,10 +2,12 @@
 
 namespace DavidvanSchaik\FilamentAiDashboard\Filament\Pages\Detail;
 
+use Carbon\Carbon;
 use DavidvanSchaik\FilamentAiDashboard\Filament\Components\FilterComponents;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\View\View;
 
@@ -21,7 +23,18 @@ abstract class BaseDetailPage extends Page implements HasForms
         return $schema
             ->components([
                 FilterComponents::monthPicker()
-                    ->afterStateUpdated(fn ($state) => $this->updateDataMonth($state))
+                    ->afterStateUpdated(function ($state, Set $set) {
+                        $month = Carbon::parse($state)->startOfMonth();
+
+                        $max = Carbon::now()->startOfMonth();
+
+                        if ($month->gt($max)) {
+                            $month = $max;
+                        }
+
+                        $set('month', $month->format('Y-m'));
+                        $this->dispatch('monthChanged', $month->format('Y-m'));
+                    })
             ])
             ->statePath('data');
     }
