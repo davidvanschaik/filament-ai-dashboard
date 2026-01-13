@@ -69,7 +69,8 @@ abstract class OpenAiService
 
         if (! Cache::has($cacheKey)) {
             FetchModelUsageDataJob::dispatch();
-            return ['Error' => 'No data found.'];
+
+            return ['Error' => 'Fetching data...'];
         }
 
         $cached = Cache::get($cacheKey);
@@ -104,7 +105,7 @@ abstract class OpenAiService
         $merged = $totalModels;
 
         foreach ($thisMonthModels as $modelKey => $data) {
-            if (!isset($merged[$modelKey])) {
+            if (! isset($merged[$modelKey])) {
                 $merged[$modelKey] = [
                     'requests' => 0,
                     'input_tokens' => 0,

@@ -14,7 +14,6 @@ class ModelsTokenEuroChart extends BaseChartWidget implements HasForms
     use InteractsWithForms;
 
     protected ?string $heading = 'Models Usage';
-
     public ?array $data = ['convert' => false];
 
     public function mount(): void
@@ -26,7 +25,8 @@ class ModelsTokenEuroChart extends BaseChartWidget implements HasForms
     {
         $month = $this->month ?? now()->format('Y-m');
 
-        $tokens  = app(AiModelService::class)->getModelTokens($month);
+        $service = app(AiModelService::class);
+        $tokens  = $service->getModelTokens($month);
         $labels = $this->getDaysInMonth($month);
 
         $datasets = $this->createDatasetForChart($tokens, end($labels));
@@ -37,12 +37,12 @@ class ModelsTokenEuroChart extends BaseChartWidget implements HasForms
         ];
     }
 
-    protected function createDatasetForChart(array $requests, int $daysInMonth): array
+    protected function createDatasetForChart(array $tokens, int $daysInMonth): array
     {
         $colorIndex = 0;
         $datasets = [];
 
-        foreach ($requests as $model => $daysCount) {
+        foreach ($tokens as $model => $daysCount) {
             $totalData = array_fill(1, $daysInMonth, 0);
 
             foreach ($daysCount as $day => $count) {

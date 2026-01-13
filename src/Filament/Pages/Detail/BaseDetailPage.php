@@ -16,6 +16,7 @@ abstract class BaseDetailPage extends Page implements HasForms
     use InteractsWithForms;
 
     protected static bool $shouldRegisterNavigation = false;
+
     public ?array $data = ['month' => null];
 
     public function form(Schema $schema): Schema
@@ -54,13 +55,6 @@ abstract class BaseDetailPage extends Page implements HasForms
         return [
             'month' => $this->data['month']
         ];
-    }
-
-    public function updateDataMonth(string $value): void
-    {
-        if ($value) {
-            $this->dispatch('monthChanged', $value);
-        }
     }
 
     public function getHeader(): ?View

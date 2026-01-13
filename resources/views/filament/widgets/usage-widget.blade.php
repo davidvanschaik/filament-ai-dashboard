@@ -18,7 +18,7 @@
                 <div class="w-full">
                     <div class="flex flex-row justify-between space-y-10">
                         <p class="text-xl font-semibold">Tokens:</p>
-                        <p class="text-[23px] font-semibold">{{ $this->usage['tokens'] }}</p>
+                        <p class="text-[23px] font-semibold">{{ number_format($this->usage['tokens'], 2, ',', '.') }}</p>
                     </div>
 
                     <div class="flex flex-row justify-between">
